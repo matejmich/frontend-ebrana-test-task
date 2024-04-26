@@ -1,0 +1,164 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "code": 666,
+            "img": {
+                "url": "/public/api/image/products/helmet.webp",
+                "alt": "Naleštěná přilba"
+            },
+            "name": "Naleštěná přilba",
+            "rating": 50,
+            "myReview": {
+                "rating": 75,
+                "comment": "Když si tuto přilbu nasadíte, cítíte se jako byste právě vyhráli na loterii ve vězení pekla. Chrání vaši lebku před vším, od démonských útoků až po vlastní neschopnost přežít hororové pasáže hry. Doporučeno 10/10, neboť dokáže odrazit i nejdrsnější údery a ještě přitom vypadáte dobře i přes potíže ve vašem okolí."
+            },
+            "reviews": [
+                {
+                    "img": {
+                        "url": "/api/image/users/doomguy.webp",
+                        "alt": "Doomguy"
+                    },
+                    "user": "Doomguy",
+                    "rating": 100,
+                    "comment": "Můj oblíbený kousek, který mi zachránil život mnohokrát. Když jsem se dostal do pekla, byla to jediná věc, která mi pomohla přežít. Doporučuji všem, kteří se chystají do pekla, nebo se tam už nacházejí.",
+                    "liked": true
+                },
+                {
+                    "img": {
+                        "url": "/api/image/users/gordon.webp",
+                        "alt": "Gordon Freeman"
+                    },
+                    "user": "Gordon Freeman",
+                    "rating": 25,
+                    "comment": "Po vyrobení vlastního HEV obleku jsem se koukal na tuto zbroj s trochou zvědavosti. Bohužel, při srovnání s mým vybavením pro boj s mimozemskou rasou se mi zdála trochu zastaralá. Nicméně, pro běžného smrtelníka, který nebojuje proti mimozemským entitám, by mohla být dostatečná. Mohu ji doporučit těm, kdo hledají základní ochranu před místními nebezpečími.",
+                    "liked": false
+                },
+                {
+                    "img": {
+                        "url": "/api/image/users/geralt.webp",
+                        "alt": "Geralt z Rivie"
+                    },
+                    "user": "Geralt z Rivie",
+                    "rating": 25,
+                    "comment": "Zbroj se mi zdá trochu neohrabaná ve srovnání s tím, co jsem zvyklý nosit při svých dobrodružstvích. Je to spíše pro ty, kdo nejsou zvyklí na náročné souboje s nestvůrami. Ale pokud hledáte něco, co vám poskytne aspoň minimální ochranu, může být užitečná. Zajímavá volba pro začátečníky, ale pro zkušeného lovce nestvůr jsem si vědom lepších možností.",
+                    "liked": false
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "code": 667,
+            "img": {
+                "url": "/api/image/products/armor.webp",
+                "alt": "Naleštěná zbroj"
+            },
+            "name": "Naleštěná zbroj",
+            "rating": 85,
+            "reviews": [
+                {
+                    "img": {
+                        "url": "/api/image/users/doomguy.webp",
+                        "alt": "Doomguy"
+                    },
+                    "user": "Doomguy",
+                    "rating": 100,
+                    "comment": "Zbroj, která mi zachránila život mnohokrát. Když jsem se dostal do pekla, byla to jediná věc, která mi pomohla přežít. Doporučuji všem, kteří se chystají do pekla, nebo se tam už nacházejí.",
+                    "liked": true
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "code": 668,
+            "img": {
+              "url": "/api/image/products/sword.webp",
+              "alt": "Pekelný meč"
+            },
+            "name": "Pekelný meč",
+            "rating": 10,
+            "reviews": [
+              {
+                "img": {
+                  "url": "/api/image/users/doomguy.webp",
+                  "alt": "Doomguy"
+                },
+                "user": "Doomguy",
+                "rating": 95,
+                "comment": "Tento meč je jako mé společník v mé cestě peklem. Jde skrz démonické bytosti jako horký nůž máslem. Pokud máte štěstí a narazíte na tento meč, neváhejte ho použít!",
+                "liked": false
+              },
+              {
+                "img": {
+                  "url": "/api/image/users/gordon.webp",
+                  "alt": "Gordon Freeman"
+                },
+                "user": "Gordon Freeman",
+                "rating": 0,
+                "comment": "Páčidlo je páčidlo...",
+                "liked": true
+              },
+              {
+                "img": {
+                  "url": "/api/image/users/geralt.webp",
+                  "alt": "Geralt z Rivie"
+                },
+                "user": "Geralt z Rivie",
+                "rating": 70,
+                "comment": "Je to zajímavý meč, ale pro mě trochu příliš jednoduchý. Preferuji své složitější a více multifunkční zbraně. Ale pro ty, kdo hledají jednoduchý, ale účinný nástroj pro boj s nestvůrami, může být tento meč dobrým řešením.",
+                "liked": false
+              }
+            ]
+        },
+        {
+            "id": 4,
+            "code": 669,
+            "img": {
+              "url": "/api/image/products/amulet.webp",
+              "alt": "Amulet"
+            },
+            "name": "Amulet",
+            "rating": 95
+        },
+        {
+            "id": 5,
+            "code": 420,
+            "img": {
+              "url": "/api/image/products/amulet.webp",
+              "alt": "Amulet"
+            },
+            "name": "Amulet",
+            "rating": 15
+        },
+        {
+            "id": 6,
+            "code": 120,
+            "img": {
+              "url": "/api/image/products/amulet.webp",
+              "alt": "Amulet"
+            },
+            "name": "Amulet",
+            "rating": 15
+        },
+        {
+            "id": 7,
+            "code": 122,
+            "img": {
+              "url": "/api/image/products/amulet.webp",
+              "alt": "Amulet"
+            },
+            "name": "Amulet",
+            "rating": 15
+        },
+        {
+            "id": 8,
+            "code": 121,
+            "img": {
+              "url": "/api/image/products/amulet.webp",
+              "alt": "Amulet"
+            },
+            "name": "Amulet",
+            "rating": 15
+        }
+    ]
+}
