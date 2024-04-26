@@ -17,6 +17,8 @@ Grafický návrh náhled: [odkaz](https://www.figma.com/proto/0u59wYxcHZj8Mq0reG
 
 Figma soubor: [odkaz](https://www.figma.com/file/0u59wYxcHZj8Mq0reGgJdy/Frontend-Testovac%C3%AD-%C3%BAloha?type=design&node-id=2002%3A12295&mode=design&t=5pFJP3GjrrDWNDft-1)
 
+Návrhy obsahují i komentáře s popisem. Pro zobrazení komentů je potřeba být přihlášený do Figma účtu.
+
 ### Úkoly
 
 Jedná se o aplikaci, která zobrazuje seznam produktů a umožňuje uživatelům hodnotit jednotlivé produkty. Uživatelé si mohou zobrazit hodnocení od ostatních uživatelů a přidat své vlastní hodnocení. Pokud uživatel již hodnocení přidal, může ho upravit a poté odeslat.
@@ -24,6 +26,8 @@ Jedná se o aplikaci, která zobrazuje seznam produktů a umožňuje uživatelů
 Vzhled a bližší popis jednotlivých komponent jsou již připraveny v návrhu. Úkolem je vytvořit funkční aplikaci, která získává data z lokálního json-serveru.
 
 Veškeré podklady se dají stahovat z figma souboru.
+
+Je možné si doinstalovat i balíčky 3. stran, pokud to považujete za nutné. Nicméně není povolenou používat žádnou knihovnu pro stylování a ani komponentovou knihovnu. Na stylování je povolen pouze sass a css.
 
 ## Akceptační kritéria
 
@@ -36,6 +40,7 @@ Veškeré podklady se dají stahovat z figma souboru.
     - Po dokončení hodnocení je možné jej odeslat. Po odeslání se zobrazí v seznamu produktů.
     - Hodnocení se nemusí ukládat na json-server, stačí v rámci aplikace (způsob, jak hodnocení ukládat, je na vás).
 - Aplikace je responzivní.
+    - Vzhled na menších zařízeních je na vás. Nicméně je potřeba dodržet základní design projektu.
 - Aplikace nepoužívá žádnou knihovnu pro stylování (např. bootstrap, material-ui, tailwindcss atd.).
     - Povoleny jsou pouze sass a css.
 - Uživatelé mohou zobrazit hodnocení od ostatních uživatelů.
