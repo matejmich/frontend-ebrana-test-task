@@ -53,3 +53,5 @@ Je možné si doinstalovat i balíčky 3. stran, pokud to považujete za nutné.
     - Celková spokojenost
 
 - Aplikace vychází z návrhu.
+
+- Řazení produktů je považováno za bonusový úkol.
