@@ -1,11 +1,14 @@
 import "./App.scss";
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
+import Product from "./Product";
 
 function App() {
 
-	const [isModalOpen, setIsModalOpen] = useState(true)
-	const [data, setData] = useState()
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [data, setData] = useState([])
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
 
 	useEffect(() => {
 		// http://localhost:3000/products
@@ -13,6 +16,7 @@ function App() {
 			try {
 				const response = await fetch("http://localhost:3000/products")
 				const jsonData = await response.json()
+				console.log(jsonData)
 				setData(jsonData)
 			} catch (error) {
 				console.error("Error fetchování dat", error)
@@ -23,7 +27,10 @@ function App() {
 		fetchData()
 
 	},[])
-
+	// console.log(data)
+	const handleProductSelect = (productId: number) => {
+        setSelectedProduct(prevSelectedProduct => prevSelectedProduct === productId ? null : productId);
+    };
 
 	return (
 		<>
@@ -50,9 +57,22 @@ function App() {
 						<button className="defaultBTN">Od nejlépe hodnocených</button>
 						<button className="defaultBTN">Od nejhůře hodnocených</button>
 					</div>
-					<div id="main-products">
-						{/* FIXME: mock */}
-						<div className=""></div>
+					<div id="product-holder">
+					{data && data.map((item) => (
+
+
+						<Product
+						key={item.id}
+						id={item.id}
+						codeP={item.code}
+						url={item.img.url}
+						alt={item.img.alt}
+						name={item.name}
+						rating={item.rating}
+						selected={selectedProduct === item.id}
+                        handleProductSelect={handleProductSelect}
+						/>
+					))}
 					</div>
 				</main>
 			</div>
