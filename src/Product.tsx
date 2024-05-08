@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import fullStarIMG from "./assets/fullStar.svg"
+import halfStarIMG from "./assets/halfStar.svg"
+import emptyStarIMG from "./assets/emptyStar.svg"
+
 interface ProductProps {
     id: number
     codeP: number
@@ -8,15 +12,40 @@ interface ProductProps {
     rating: number
     selected: boolean;
     handleProductSelect: (productId: number) => void;
+    handleModalOpen: (_: boolean) => void;
+    handleSidebarOpen: (_: boolean) => void;
   }
 
-function Product ({id, codeP, url, alt, name, rating, selected, handleProductSelect }: ProductProps) {
+function Product ({id, codeP, url, alt, name, rating, selected, handleProductSelect, handleModalOpen, handleSidebarOpen }: ProductProps) {
 
+    const [fullStar, setFullStar] = useState(0);
+    const [halfStar, setHalfStar] = useState(0);
+    const [emptyStar, setEmptyStar] = useState(0);
+    
 
+    useEffect(() => {
+        const full = Math.floor(rating / 20);
+        const half = Math.floor((rating - (full * 20)) / 10);
+        const empty = 5 - full - half;
+        
+        setFullStar(full);
+        setHalfStar(half);
+        setEmptyStar(empty);
+    }, [rating]);
 
-    const handleClick = () => {
+    function handleClick()  {
         handleProductSelect(id);
-    };
+    }
+
+    function handleModalOpenClick() {
+        handleModalOpen(true)
+
+    }
+    function handleSidebarOpenClick() {
+        handleSidebarOpen(true)
+    }
+    
+    
 
     return (
         
@@ -37,13 +66,28 @@ function Product ({id, codeP, url, alt, name, rating, selected, handleProductSel
                                 <p>Kód produktu: {codeP}</p>
                             </div>
                             <div className="product-info-top-right">
+                                {[...Array(fullStar)].map((_, index) => (
+                                    <img key={index} src={fullStarIMG} alt="Full Star" />
+                                ))}
+                                {[...Array(halfStar)].map((_, index) => (
+                                    <img key={index} src={halfStarIMG} alt="Half Star" />
+                                ))}
+                                {[...Array(emptyStar)].map((_, index) => (
+                                    <img key={index} src={emptyStarIMG} alt="Empty Star" />
+                                ))}
                                 <b>{rating} %</b>
                             </div>
 
                         </div>
                         <div className="product-info-down">
-                            <button className="defaultBTN">Ohodnotit</button>
-                            <button className="defaultBTN">Zobrazit recenze</button>
+                            <button className="defaultBTN" onClick={() => { 
+                                                                            handleClick()
+                                                                            handleModalOpenClick()
+                                                                            }}>Ohodnotit</button>
+                            <button className="defaultBTN" onClick={() => { 
+                                                                            handleClick()
+                                                                            handleSidebarOpenClick()
+                                                                            }}>Zobrazit recenze</button>
 
                         </div>
                         
