@@ -13,7 +13,30 @@ import faceFour from "./assets/faceFour.svg"
 import faceFive from "./assets/faceFive.svg"
 
 
-
+interface Product {
+    id: string;
+    code: number;
+    img: {
+        url: string;
+        alt: string;
+    };
+    name: string;
+    rating: number;
+	myReview: Array<{
+		rating: number;
+		comment: string;
+	}>
+	reviews: Array<{
+		img: {
+			url: string;
+			alt: string;
+		};
+		user: string;
+		rating: number;
+		comment: string;
+		liked: boolean;
+	}>;
+}
 
 
 
@@ -21,8 +44,8 @@ function App() {
 
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [isSidebarOpen, setIsSideBarOpen] = useState(false)
-	const [data, setData] = useState([])
-    const [selectedProductID, setSelectedProductID] = useState();
+	const [data, setData] = useState<Product[]>([])
+    const [selectedProductID, setSelectedProductID] = useState<number>(0);
 	const [currentProduct, setCurrentProduct] = useState()
     const [displayedProducts, setDisplayedProducts] = useState(4);
     const [avgRating, setAvgRating] = useState(50);
@@ -56,21 +79,46 @@ function App() {
 	},[])
 
 	useEffect(() => {
-		setCurrentProduct(data[0])
-	}, [data])
+		// Select the first product only when data is initially fetched
+		if (selectedProductID === 0 && data.length > 0) {
+			setCurrentProduct(data[0]);
+		}
+	}, [data, selectedProductID]);
 	// když se změní currentProduct
 	useEffect(() => {
 		filterCurrentProduct()
 	}, [selectedProductID])
+	
+	// kalkulace avg ratingu
+	useEffect(() => {
+		let numberOfRatedItems: number = 0;
+		const totalRating: number = data.reduce((total, currentItem) => {
+			if (currentItem.myReview && currentItem.myReview.rating) {
+				numberOfRatedItems++;
+				return total + currentItem.myReview.rating;
+			} else {
+				return total;
+			}
+		}, 0);
+		
+		if (numberOfRatedItems > 0) {
+			setAvgRating(totalRating / numberOfRatedItems);
+		} else {
+			// Handle case when there are no rated items
+			setAvgRating(0);
+		}
+	}, [data]);
 	// když se změní avgRating
 	useEffect(() => {
 		calculateStar()
 		calculateIMG()
     }, [avgRating]);
+
 	// console.log(data)
 	function filterCurrentProduct() {
 		const product = data.find(item => item.id ===selectedProductID)
 		setCurrentProduct(product)
+
 	}
 
 	function calculateIMG() {
@@ -92,6 +140,10 @@ function App() {
         const half = Math.floor((avgRating - (full * 20)) / 10);
         const empty = 5 - full - half;
         
+		console.log('Full:', full);
+		console.log('Half:', half);
+		console.log('Empty:', empty);
+
         setFullStar(full);
         setHalfStar(half);
         setEmptyStar(empty);
@@ -110,37 +162,53 @@ function App() {
 	function loadMore() {
 		setDisplayedProducts(p => p + 2)
 	}
-	function handleSidebarOpen(b: boolean) {
+	function handleSidebarOpen() {
+		setIsSideBarOpen(true)
+	}
+	function handleSidebarClose () {
 
-		setIsSideBarOpen(b)
+		setIsSideBarOpen(false)
+	}
+	function toggleHeart(productId: number, reviewIndex: number) {
+		const updatedData = [...data];
+		const productIndex = updatedData.findIndex(product => product.id === productId);
+		if (productIndex !== -1) {
+			const review = updatedData[productIndex].reviews[reviewIndex];
+			if (review) {
+				updatedData[productIndex].reviews[reviewIndex] = { ...review, liked: !review.liked };
+				setData(updatedData);
+			}
+		}
 	}
 
 	return (
 		<>
 			<div id="wrapper">
 				<header>
-					<div id="header-description">
-						<h2>Hodnocení zakoupených produktů</h2>
-						<div>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
-						<button className="defaultBTN">Odeslat moje hodnocení</button>
-						{/* TODO: func */}
-					</div>
-					<div id="header-rating">
-						{/* FIXME: reaguje na průměrný rating */}
-						<img src={ratingIMG} alt="obličej" className="avg-rating-face"/>
-						<div id="header-rating-stars">
-								{[...Array(fullStar)].map((_, index) => (
-                                    <img key={index} className="avg-rating-star" src={fullStarIMG} alt="plná hvězda" />
-                                ))}
-                                {[...Array(halfStar)].map((_, index) => (
-                                    <img key={index} className="avg-rating-star" src={halfStarIMG} alt="půl hvězdy" />
-                                ))}
-                                {[...Array(emptyStar)].map((_, index) => (
-                                    <img key={index}className="avg-rating-star" src={emptyStarIMG} alt="prázdná hvězda" />
-                                ))}
+					<div id="header-top">
+						<div id="header-description">
+							<h2>Hodnocení zakoupených produktů</h2>
+							<div>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+							<button className="defaultBTN">Odeslat moje hodnocení</button>
+							{/* TODO: func */}
 						</div>
-						<p>Moje celková spokojenost: <b>{avgRating} %</b></p>
+						<div id="header-rating">
+							{/* FIXME: reaguje na průměrný rating */}
+							<img src={ratingIMG} alt="obličej" className="avg-rating-face"/>
+							<div id="header-rating-stars">
+									{[...Array(fullStar)].map((_, index) => (
+										<img key={index} className="avg-rating-star" src={fullStarIMG} alt="plná hvězda" />
+									))}
+									{[...Array(halfStar)].map((_, index) => (
+										<img key={index} className="avg-rating-star" src={halfStarIMG} alt="půl hvězdy" />
+									))}
+									{[...Array(emptyStar)].map((_, index) => (
+										<img key={index}className="avg-rating-star" src={emptyStarIMG} alt="prázdná hvězda" />
+									))}
+							</div>
+							<p>Moje celková spokojenost: <b>{avgRating} %</b></p>
 
+						</div>
 					</div>
 				</header>
 				<main>
@@ -165,6 +233,7 @@ function App() {
                         handleProductSelect={handleProductSelect}
 						handleModalOpen={handleModalOpen}
 						handleSidebarOpen={handleSidebarOpen}
+						myReview={item.myReview}
 						/>
 					))}
 					</div>
@@ -179,7 +248,9 @@ function App() {
 								/> : null}
 			{/* sidebar */}
 			{isSidebarOpen ? <Sidebar 
-								product = {currentProduct}
+								currentProduct={currentProduct} 
+								handleSidebarClose={handleSidebarClose}
+								toggleHeart={toggleHeart}
 								/> : null}
 			
 		</>

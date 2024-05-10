@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import fullStarIMG from "./assets/fullStar.svg"
 import halfStarIMG from "./assets/halfStar.svg"
 import emptyStarIMG from "./assets/emptyStar.svg"
-
+import editIMG from "./assets/edit.svg"
+import deleteIMG from "./assets/delete.svg"
 interface ProductProps {
     id: number
     codeP: number
@@ -13,11 +14,15 @@ interface ProductProps {
     selected: boolean;
     handleProductSelect: (productId: number) => void;
     handleModalOpen: (_: boolean) => void;
-    handleSidebarOpen: (_: boolean) => void;
+    handleSidebarOpen: () => void;
+    myReview?: {
+        rating: number;
+        comment: string;
+    };
   }
 
-function Product ({id, codeP, url, alt, name, rating, selected, handleProductSelect, handleModalOpen, handleSidebarOpen }: ProductProps) {
-
+function Product ({id, codeP, url, alt, name, rating, selected, handleProductSelect, handleModalOpen, handleSidebarOpen, myReview }: ProductProps) {
+    myReview = myReview || { rating: -100, comment: "" };
     const [fullStar, setFullStar] = useState(0);
     const [halfStar, setHalfStar] = useState(0);
     const [emptyStar, setEmptyStar] = useState(0);
@@ -42,7 +47,7 @@ function Product ({id, codeP, url, alt, name, rating, selected, handleProductSel
 
     }
     function handleSidebarOpenClick() {
-        handleSidebarOpen(true)
+        handleSidebarOpen()
     }
     
     
@@ -65,18 +70,20 @@ function Product ({id, codeP, url, alt, name, rating, selected, handleProductSel
                                 <h3>{name}</h3>
                                 <p>Kód produktu: {codeP}</p>
                             </div>
-                            <div className="product-info-top-right">
-                                {[...Array(fullStar)].map((_, index) => (
-                                    <img key={index} src={fullStarIMG} alt="Full Star" />
-                                ))}
-                                {[...Array(halfStar)].map((_, index) => (
-                                    <img key={index} src={halfStarIMG} alt="Half Star" />
-                                ))}
-                                {[...Array(emptyStar)].map((_, index) => (
-                                    <img key={index} src={emptyStarIMG} alt="Empty Star" />
-                                ))}
-                                <b>{rating} %</b>
-                            </div>
+                            {rating !== undefined &&
+                                <div className="product-info-top-right">
+                                    {[...Array(fullStar)].map((_, index) => (
+                                        <img key={index} src={fullStarIMG} alt="Full Star" />
+                                    ))}
+                                    {[...Array(halfStar)].map((_, index) => (
+                                        <img key={index} src={halfStarIMG} alt="Half Star" />
+                                    ))}
+                                    {[...Array(emptyStar)].map((_, index) => (
+                                        <img key={index} src={emptyStarIMG} alt="Empty Star" />
+                                    ))}
+                                    <b>{rating} %</b>
+                                </div>
+                            }
 
                         </div>
                         <div className="product-info-down">
@@ -93,9 +100,9 @@ function Product ({id, codeP, url, alt, name, rating, selected, handleProductSel
                         
                     </div>
                 </div>
-                {selected && (
+                {selected && ((myReview.rating !== undefined && myReview.rating >= 0) || (myReview.comment !== undefined) && myReview.comment !== "") &&  (
                 <div className="product-details">
-                    
+                    a
                 </div>
                 )}  
             </label>

@@ -9,13 +9,13 @@ interface ProductProps {
     // selected: boolean;
     // handleProductSelect: (productId: number) => void;
     // handleModalOpen: (_: boolean) => void;
-    handleModalClose: (_: boolean) => void;
+    handleModalClose: () => void;
   }
 
 function Modal({ handleModalClose }: ProductProps) {
 
 function handleModalCloseClick() {
-    handleModalClose(true)
+    handleModalClose()
 }
 
     return (
@@ -39,6 +39,7 @@ function handleModalCloseClick() {
                 </form>
                     
             </div>
+            <div id="pop-up-escape" onClick={handleModalCloseClick}></div>
         </div>  
     )
 }
