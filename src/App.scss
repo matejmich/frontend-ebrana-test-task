@@ -50,7 +50,8 @@ h3 {
 .disabledBTN {
 	background-color: #9C9C9C;
 	color: #F9F9F9;
-	border-color:#9C9C9C
+	border-color:#9C9C9C;
+	cursor: default;
 }
 .xBTN {
 	border: none;
@@ -173,6 +174,7 @@ h2 {
 }
 .product-wrapper {
 	display: flex;
+	flex-direction: column;
 	width: 468px;
 	padding: 12px;
 	gap: 16px;
@@ -183,6 +185,46 @@ h2 {
 	justify-content: space-between;
 	align-items: center;
 
+}
+.product-others {
+	width: 100%;
+	display: flex;
+	gap: 16px;
+	justify-content: space-between;
+	align-items: center;
+}
+.product-details {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	gap: 8px;
+	width: 100%;
+}
+.myRating-header {
+	font-size: 12px;
+	font-weight: 700;
+}
+.myRating-comment {
+	color: #5B5B5B;
+}
+.myRating-bottom {
+	display: flex;
+	justify-content: space-between;
+}
+
+.myRating-buttons {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 8px;
+}
+.myRating-button {
+	cursor: pointer;
+}
+.myRating-rating {
+	display: flex;
+	align-items: end;
+	justify-content: start;
+	gap: 4px;
 }
 
 .product-image {
@@ -242,6 +284,7 @@ input[type='radio']:before {
 }
 input[type='radio']:checked:before {
     background: #28A1E1;
+
 }
 
 
@@ -262,6 +305,15 @@ input[type='radio']::after {
     width: 2px; /* Adjust the width of the line */
     top: 17px; /* Adjust the starting position of the line */
     left: 6px;
+}
+input[type='radio']::after:checked {
+	height: 200px;
+}
+textarea {
+	width: 100%;
+	border: 1px solid #E6E6E6;
+	border-radius: 4px;
+	resize: none;
 }
 
 .avg-rating-star {
@@ -380,4 +432,15 @@ input[type='radio']::after {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.star-rating {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 12px;
+}
+.pop-up-stars {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
 }

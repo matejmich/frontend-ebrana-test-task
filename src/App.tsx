@@ -14,7 +14,7 @@ import faceFive from "./assets/faceFive.svg"
 
 
 interface Product {
-    id: string;
+    id: number;
     code: number;
     img: {
         url: string;
@@ -22,10 +22,10 @@ interface Product {
     };
     name: string;
     rating: number;
-	myReview: Array<{
-		rating: number;
-		comment: string;
-	}>
+	myReview?: {
+        rating: number;
+        comment: string;
+    };
 	reviews: Array<{
 		img: {
 			url: string;
@@ -53,30 +53,44 @@ function App() {
     const [halfStar, setHalfStar] = useState(0);
     const [emptyStar, setEmptyStar] = useState(0);
     const [ratingIMG, setRatingIMG] = useState(faceOne);
-
+	const [numberOfNewlyRatedProducts, setNumberOfNewlyRatedProducts] = useState<boolean>(false)
+	const [sortOrder, setSortOrder] = useState<"highest" | "lowest">()
 	
 
 	
 
 	// data loading
 	useEffect(() => {
-		// http://localhost:3000/products
+
+		const savedData = localStorage.getItem('productData');
+		if (savedData) {
+			try {
+				const dataForSorting = JSON.parse(savedData)
+				const sortedData = [...dataForSorting];
+				sortedData.sort((a, b) => a.id - b.id);
+				
+				setData(sortedData);
+				// setData(JSON.parse(savedData))
+				console.log('Data loaded from local storage.')
+				return
+			} catch (error) {
+				console.error('Error parsing data from local storage:', error);
+			}
+		}
+	
+
 		async function fetchData() {
 			try {
 				const response = await fetch("http://localhost:3000/products")
 				const jsonData = await response.json()
-				console.log(jsonData)
 				setData(jsonData)
+				console.log('Data fetched from API.')
 			} catch (error) {
-				console.error("Error fetchování dat", error)
-				
+				console.error('Error fetching data from API:', error)
 			}
-			
 		}
-		fetchData()
-
-
-	},[])
+		fetchData();
+	}, []);
 
 	useEffect(() => {
 		// Select the first product only when data is initially fetched
@@ -102,6 +116,7 @@ function App() {
 		}, 0);
 		
 		if (numberOfRatedItems > 0) {
+			console.log(numberOfNewlyRatedProducts)
 			setAvgRating(totalRating / numberOfRatedItems);
 		} else {
 			// Handle case when there are no rated items
@@ -113,6 +128,24 @@ function App() {
 		calculateStar()
 		calculateIMG()
     }, [avgRating]);
+
+
+	useEffect(() => {
+
+		const sortedData = [...data];
+		if (sortOrder === "highest") {
+			sortedData.sort((a, b) => b.rating - a.rating);
+		} else if (sortOrder === "lowest") {
+			sortedData.sort((a, b) => a.rating - b.rating);
+		} else {
+			return
+		}
+		setData(sortedData);
+	}, [sortOrder]);
+
+
+	
+
 
 	// console.log(data)
 	function filterCurrentProduct() {
@@ -140,9 +173,7 @@ function App() {
         const half = Math.floor((avgRating - (full * 20)) / 10);
         const empty = 5 - full - half;
         
-		console.log('Full:', full);
-		console.log('Half:', half);
-		console.log('Empty:', empty);
+
 
         setFullStar(full);
         setHalfStar(half);
@@ -180,6 +211,69 @@ function App() {
 			}
 		}
 	}
+	function handleModalSave(rating: number, comment: string) {
+		setNumberOfNewlyRatedProducts(true)
+
+		setData(prevData => {
+			const updatedData = [...prevData];
+			const updatingIndex = selectedProductID - 1;
+			// console.log(rating)
+			// console.log(comment)
+	
+			// Ensure myReview exists and initialize if it doesn't
+			if (!updatedData[updatingIndex].myReview) {
+				updatedData[updatingIndex].myReview = {
+					rating: 0,
+					comment: ''
+				};
+			}
+	
+			// Update myReview with new rating and comment
+			updatedData[updatingIndex].myReview.rating = rating;
+			updatedData[updatingIndex].myReview.comment = comment;
+
+			return updatedData;
+		});
+	}
+	function handleDeleteMyReview() {
+
+
+		setCurrentProduct(prevProduct => {
+			if (prevProduct) {
+				const updatedProduct = { ...prevProduct };
+				delete updatedProduct.myReview;
+				return updatedProduct;
+			}
+			return prevProduct;
+		});
+		setData(prevData => {
+			const updatedData = [...prevData];
+			const updatingIndex = selectedProductID - 1;
+	
+			// Update myReview with new rating and comment
+			delete updatedData[updatingIndex].myReview
+
+
+			return updatedData;
+		});
+	}
+
+
+	function handleSendData() {
+		try {
+			const jsonData = JSON.stringify(data);
+			localStorage.setItem('productData', jsonData);
+			console.log('Data saved to local storage.');
+		} catch (error) {
+			console.error('Error saving data to local storage:', error);
+		}
+		console.log(numberOfNewlyRatedProducts)
+	}
+	
+
+	function handleSortOrderChange(order: "highest" | "lowest") {
+		setSortOrder(order)
+	}
 
 	return (
 		<>
@@ -189,14 +283,15 @@ function App() {
 						<div id="header-description">
 							<h2>Hodnocení zakoupených produktů</h2>
 							<div>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
-							<button className="defaultBTN">Odeslat moje hodnocení</button>
+							<button className={(numberOfNewlyRatedProducts > 0) ? "defaultBTN" : "disabledBTN"} onClick={handleSendData}>Odeslat moje hodnocení</button>
 							{/* TODO: func */}
 						</div>
 						<div id="header-rating">
 							{/* FIXME: reaguje na průměrný rating */}
 							<img src={ratingIMG} alt="obličej" className="avg-rating-face"/>
 							<div id="header-rating-stars">
-									{[...Array(fullStar)].map((_, index) => (
+									{
+									[...Array(fullStar)].map((_, index) => (
 										<img key={index} className="avg-rating-star" src={fullStarIMG} alt="plná hvězda" />
 									))}
 									{[...Array(halfStar)].map((_, index) => (
@@ -206,7 +301,7 @@ function App() {
 										<img key={index}className="avg-rating-star" src={emptyStarIMG} alt="prázdná hvězda" />
 									))}
 							</div>
-							<p>Moje celková spokojenost: <b>{avgRating} %</b></p>
+							<p>Moje celková spokojenost: <b>{Math.floor(avgRating)} %</b></p>
 
 						</div>
 					</div>
@@ -214,8 +309,8 @@ function App() {
 				<main>
 					<div id="main-sorting">
 						<p>Seřadit: </p>
-						<button className="defaultBTN">Od nejlépe hodnocených</button>
-						<button className="defaultBTN">Od nejhůře hodnocených</button>
+						<button className="defaultBTN" onClick={() => handleSortOrderChange("highest")}>Od nejlépe hodnocených</button>
+						<button className="defaultBTN" onClick={() => handleSortOrderChange("lowest")}>Od nejhůře hodnocených</button>
 					</div>
 					<div id="product-holder">
 					{data.slice(0, displayedProducts).map((item) => (
@@ -234,6 +329,7 @@ function App() {
 						handleModalOpen={handleModalOpen}
 						handleSidebarOpen={handleSidebarOpen}
 						myReview={item.myReview}
+						handleDeleteMyReview={handleDeleteMyReview}
 						/>
 					))}
 					</div>
@@ -245,6 +341,8 @@ function App() {
 			{/* popup */}
 			{isModalOpen ? <Modal
 								handleModalClose={handleModalClose}
+								currentProduct={currentProduct}
+								handleModalSave={handleModalSave}
 								/> : null}
 			{/* sidebar */}
 			{isSidebarOpen ? <Sidebar 
