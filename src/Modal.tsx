@@ -92,6 +92,7 @@ function Modal({ handleModalClose, currentProduct, handleModalSave }: ProductPro
                         value={myComment}
                         onChange={handleCommentChange}
                         placeholder="Okomentujte produkt..."
+                        maxLength={130}
                     ></textarea>
                     <button
                         

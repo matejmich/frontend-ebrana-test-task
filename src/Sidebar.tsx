@@ -31,7 +31,7 @@ interface SidebarProps {
       liked: boolean;
     }>;
   };
-  handleSidebarClose: (index: number) => void;
+  handleSidebarClose: () => void;
   toggleHeart: () => void;
 
 }
@@ -85,6 +85,7 @@ function Sidebar({ currentProduct, handleSidebarClose, toggleHeart }: SidebarPro
   return (
     <div id="sidebar">
       <div id="sidebar-window">
+        <button id="sidebar-closeBTN" className="activeBTN" onClick={handleSidebarCloseClick}>&times;</button>
         <div id="sidebar-h">Hodnocení uživatelů</div>
         <div id="sidebar-avg-rating">
           <img src={ratingIMG} alt="obličej" className="avg-rating-face" />

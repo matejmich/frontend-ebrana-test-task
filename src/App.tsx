@@ -267,7 +267,7 @@ function App() {
 		} catch (error) {
 			console.error('Error saving data to local storage:', error);
 		}
-		console.log(numberOfNewlyRatedProducts)
+		setNumberOfNewlyRatedProducts(false)
 	}
 	
 
@@ -301,7 +301,7 @@ function App() {
 										<img key={index}className="avg-rating-star" src={emptyStarIMG} alt="prázdná hvězda" />
 									))}
 							</div>
-							<p>Moje celková spokojenost: <b>{Math.floor(avgRating)} %</b></p>
+							<p>Moje celková spokojenost: <b className="nowrap-text">{Math.floor(avgRating)} %</b></p>
 
 						</div>
 					</div>

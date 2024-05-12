@@ -20,14 +20,15 @@ button {
 	border: 1px solid;
 	height: 20px;
 	font-weight: 400;
-	width: auto;
-	display: inline-block;
+	width: fit-content; /* Set width to fit its content */
+    display: inline-block;
+    white-space: nowrap;
 }
 form {
 	display: flex;
 	flex-direction: column;
 	align-items: start;
-	gap: 20px;
+	gap: 10px;
 }
 h1 {
 	font-size: 20px;
@@ -68,12 +69,15 @@ h3 {
 #wrapper {
 	margin-left: auto;
 	margin-right: auto;
+	
 	max-width: 600px;
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
 	padding-top: 80px;
 	padding-bottom: 80px;
+	padding-left: 4px;
+	padding-right: 4px;
 
 
 }
@@ -147,6 +151,7 @@ h2 {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	gap: 10px;
 }
 #pop-up-window {
 	border: 1px solid #E6E6E6;
@@ -156,6 +161,7 @@ h2 {
 	gap: 10px;
 	width: 391px;
 	z-index: 10;
+	gap: 10px;
 }
 
 
@@ -295,20 +301,20 @@ input[type="radio"] {
 input[type="radio"] + input[type="radio"] {
     border-top: 2px solid #28A1E1;
 }
-input[type='radio']::after {
-	display: block;
-    content: " ";
-    position: absolute;
-    bottom: 6px;
-    background: #28A1E1;
-    height: calc(850% ); /* Adjust the height of the line */
-    width: 2px; /* Adjust the width of the line */
-    top: 17px; /* Adjust the starting position of the line */
-    left: 6px;
-}
-input[type='radio']::after:checked {
-	height: 200px;
-}
+// input[type='radio']::after {
+// 	display: block;
+//     content: " ";
+//     position: absolute;
+//     bottom: 6px;
+//     background: #28A1E1;
+//     height: calc(850% ); 
+//     width: 2px; 
+//     top: 17px; 
+//     left: 6px;
+// }
+// input[type='radio']:checked::after {
+// 	height: calc(1700%);
+// }
 textarea {
 	width: 100%;
 	border: 1px solid #E6E6E6;
@@ -443,4 +449,131 @@ textarea {
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
+}
+.nowrap-text {
+	white-space: nowrap;
+}
+#sidebar-closeBTN {
+	width: 100%;
+	height: fit-content;
+	font-size: 20px;
+	display: none;
+
+}
+
+@media screen and (max-width: 500px) {
+	#sidebar-closeBTN {
+		display: block;
+	}
+	#pop-up-window {
+		padding: 10px;
+	}
+	.product {
+		flex-wrap: wrap;
+		width: fit-content;
+	}
+	.product-others {
+		flex-wrap: wrap;
+		justify-content: center;
+		width: fit-content;
+
+	}
+	.product-info {
+		flex-wrap: wrap;
+		width: fit-content;
+
+	}
+	.product-info-top {
+		flex-wrap: wrap;
+		width: fit-content;
+
+	}
+	.product-wrapper {
+		flex-wrap: wrap;
+		width: fit-content;
+
+	}
+	.product-details {
+		flex-wrap: wrap;
+		width: fit-content;
+		max-width: 330px;
+
+	}
+}
+
+@media screen and (max-width: 410px) {
+	#header-top {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	#main-sorting {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.product {
+		flex-wrap: wrap;
+		width: fit-content;
+	}
+	.product-others {
+		flex-wrap: wrap;
+		justify-content: center;
+		width: fit-content;
+
+	}
+	.product-info {
+		flex-wrap: wrap;
+		width: fit-content;
+
+	}
+	.product-info-top {
+		flex-wrap: wrap;
+		width: fit-content;
+
+	}
+	.product-wrapper {
+		flex-wrap: wrap;
+		width: fit-content;
+
+	}
+	.product-details {
+		flex-wrap: wrap;
+		width: fit-content;
+		max-width: 330px;
+
+	}
+	#sidebar-window {
+		width: 302px;
+		height: 100vh;
+		background-color: #ffffff;
+		padding: 4px;
+		gap: 16px;
+		
+	}
+
+input[type="radio"] {
+    display: none;
+}
+
+
+input[type='radio']:before {
+	display: none;
+
+
+}
+input[type='radio']:checked:before {
+    display: none;
+
+
+}
+
+
+input[type="radio"] {
+    display: none;
+
+}
+
+input[type="radio"] + input[type="radio"] {
+    display: none;
+
+}
 }
